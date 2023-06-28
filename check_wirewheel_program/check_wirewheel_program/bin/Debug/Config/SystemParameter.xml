@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Mobile_System_def>
+  <m_ChartXMin>-35</m_ChartXMin>
+  <m_ChartXMax>30</m_ChartXMax>
+  <m_ChartYMax>355</m_ChartYMax>
+  <m_ChartYMin>325</m_ChartYMin>
+  <ChartXMin>-35</ChartXMin>
+  <ChartXMax>30</ChartXMax>
+  <ChartYMax>355</ChartYMax>
+  <ChartYMin>325</ChartYMin>
+</Mobile_System_def>

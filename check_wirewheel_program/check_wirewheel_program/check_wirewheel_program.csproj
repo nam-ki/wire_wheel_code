@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1C9C84E7-EEDC-4B15-A288-D0E04BE46621}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>check_wirewheel_program</RootNamespace>
+    <AssemblyName>check_wirewheel_program</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CustomMarshalers" />
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.5.0, Culture=neutral, PublicKeyToken=8985beaab7ea3f04, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft-WindowsAPICodePack-Core.1.1.5\lib\net472\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.5.0, Culture=neutral, PublicKeyToken=8985beaab7ea3f04, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft-WindowsAPICodePack-Shell.1.1.5\lib\net472\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ControlSrc\Mobile_Define.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Include="setting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="setting.Designer.cs">
+      <DependentUpon>setting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="obj\Debug\check_wirewheel_program.Form1.resources" />
+    <EmbeddedResource Include="obj\Debug\check_wirewheel_program.Properties.Resources.resources" />
+    <EmbeddedResource Include="obj\Debug\check_wirewheel_program.setting.resources" />
+    <EmbeddedResource Include="obj\Debug\test.Form1.resources" />
+    <EmbeddedResource Include="obj\Debug\test.Properties.Resources.resources" />
+    <EmbeddedResource Include="setting.resx">
+      <DependentUpon>setting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="bin\Debug\check_wirewheel_program.exe.config" />
+    <None Include="bin\Debug\test.exe.config" />
+    <None Include="obj\Debug\check_wirewheel_program.csproj.AssemblyReference.cache" />
+    <None Include="obj\Debug\check_wirewheel_program.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\check_wirewheel_program.csproj.GenerateResource.cache" />
+    <None Include="obj\Debug\check_wirewheel_program.csproj.SuggestedBindingRedirects.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Debug\test.csproj.AssemblyReference.cache" />
+    <None Include="obj\Debug\test.csproj.CopyComplete" />
+    <None Include="obj\Debug\test.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\test.csproj.GenerateResource.cache" />
+    <None Include="obj\Debug\test.csproj.SuggestedBindingRedirects.cache" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\2023년 06월 23일\2023년 06월 23일_ProgramLog.txt" />
+    <Content Include="bin\Debug\2023년 06월 23일\DataLog\14시 14분 37초.txt" />
+    <Content Include="bin\Debug\2023년 06월 23일\DataLog\14시 15분 57초.txt" />
+    <Content Include="bin\Debug\2023년 06월 23일\DataLog\14시 34분 23초.txt" />
+    <Content Include="bin\Debug\2023년 06월 23일\DataLog\14시 34분 30초.txt" />
+    <Content Include="bin\Debug\2023년 06월 23일\DataLog\14시 34분 31초.txt" />
+    <Content Include="bin\Debug\2023년 06월 23일\DataLog\14시 34분 32초.txt" />
+    <Content Include="bin\Debug\2023년 06월 23일\DataLog\14시 34분 33초.txt" />
+    <Content Include="bin\Debug\2023년 06월 23일\DataLog\14시 34분 52초.txt" />
+    <Content Include="bin\Debug\2023년 06월 23일\DataLog\14시 47분 00초.txt" />
+    <Content Include="bin\Debug\2023년 06월 23일\DataLog\14시 47분 54초.txt" />
+    <Content Include="bin\Debug\2023년 06월 23일\DataLog\14시 57분 21초.txt" />
+    <Content Include="bin\Debug\2023년 06월 23일\DataLog\15시 05분 19초.txt" />
+    <Content Include="bin\Debug\2023년 06월 23일\DataLog\15시 12분 49초.txt" />
+    <Content Include="bin\Debug\check_wirewheel_program.exe" />
+    <Content Include="bin\Debug\check_wirewheel_program.pdb" />
+    <Content Include="bin\Debug\Config\SystemParameter.xml" />
+    <Content Include="bin\Debug\Log\test1.txt" />
+    <Content Include="bin\Debug\Log\test2.txt" />
+    <Content Include="bin\Debug\Log\마모 삭륜.txt" />
+    <Content Include="bin\Debug\Log\정상 삭륜.txt" />
+    <Content Include="bin\Debug\Microsoft.WindowsAPICodePack.dll" />
+    <Content Include="bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll" />
+    <Content Include="bin\Debug\Microsoft.WindowsAPICodePack.Shell.xml" />
+    <Content Include="bin\Debug\Microsoft.WindowsAPICodePack.xml" />
+    <Content Include="bin\Debug\test.exe" />
+    <Content Include="bin\Debug\test.pdb" />
+    <Content Include="obj\Debug\check_wirewheel_program.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\check_wirewheel_program.exe" />
+    <Content Include="obj\Debug\check_wirewheel_program.pdb" />
+    <Content Include="obj\Debug\TempPE\Properties.Resources.Designer.cs.dll" />
+    <Content Include="obj\Debug\test.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\test.exe" />
+    <Content Include="obj\Debug\test.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
