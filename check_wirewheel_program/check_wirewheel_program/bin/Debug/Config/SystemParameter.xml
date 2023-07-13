@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Mobile_System_def>
-  <m_ChartXMin>-35</m_ChartXMin>
-  <m_ChartXMax>30</m_ChartXMax>
-  <m_ChartYMax>355</m_ChartYMax>
-  <m_ChartYMin>325</m_ChartYMin>
-  <ChartXMin>-35</ChartXMin>
-  <ChartXMax>30</ChartXMax>
-  <ChartYMax>355</ChartYMax>
-  <ChartYMin>325</ChartYMin>
+  <m_ChartXMin>-38</m_ChartXMin>
+  <m_ChartXMax>45</m_ChartXMax>
+  <m_ChartYMax>371</m_ChartYMax>
+  <m_ChartYMin>300</m_ChartYMin>
+  <m_ChartXMin2>-40</m_ChartXMin2>
+  <m_ChartXMax2>35</m_ChartXMax2>
+  <m_ChartYMax2>370</m_ChartYMax2>
+  <m_ChartYMin2>280</m_ChartYMin2>
+  <ChartXMin>-38</ChartXMin>
+  <ChartXMax>45</ChartXMax>
+  <ChartYMax>371</ChartYMax>
+  <ChartYMin>300</ChartYMin>
+  <ChartXMin2>-40</ChartXMin2>
+  <ChartXMax2>35</ChartXMax2>
+  <ChartYMax2>370</ChartYMax2>
+  <ChartYMin2>280</ChartYMin2>
 </Mobile_System_def>

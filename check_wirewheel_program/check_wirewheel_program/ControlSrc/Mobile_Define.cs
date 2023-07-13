@@ -213,6 +213,47 @@ namespace KIRO
             set { m_ChartYMin = value; }
         }
 
+        //chart2
+        public int m_ChartXMin2;
+        [CategoryAttribute("차트 설정"),
+        DisplayName("차트 X2축 Min값"),
+        Description("차트 X2축 Min 값 설정")]
+        public int ChartXMin2
+        {
+            get { return m_ChartXMin2; }
+            set { m_ChartXMin2 = value; }
+        }
+
+        public int m_ChartXMax2;
+        [CategoryAttribute("차트 설정"),
+        DisplayName("차트 X2축 Max값"),
+        Description("차트 X2축 Max 값 설정")]
+        public int ChartXMax2
+        {
+            get { return m_ChartXMax2; }
+            set { m_ChartXMax2 = value; }
+        }
+
+        public int m_ChartYMax2;
+        [CategoryAttribute("차트 설정"),
+        DisplayName("차트 Y2축 Max값"),
+        Description("차트 Y2축 Max값 설정")]
+        public int ChartYMax2
+        {
+            get { return m_ChartYMax2; }
+            set { m_ChartYMax2 = value; }
+        }
+
+        public int m_ChartYMin2;
+        [CategoryAttribute("차트 설정"),
+        DisplayName("차트 Y2축 Min값"),
+        Description("차트 Y2축 Min값 설정")]
+        public int ChartYMin2
+        {
+            get { return m_ChartYMin2; }
+            set { m_ChartYMin2 = value; }
+        }
+
         //public string m_ElevationTiltIP;
         //[CategoryAttribute("모터 드라이버 IP"),
         //DisplayName("Elevation Tilt IP설정")]

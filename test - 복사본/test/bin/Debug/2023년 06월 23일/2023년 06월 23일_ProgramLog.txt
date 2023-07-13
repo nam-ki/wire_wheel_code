@@ -1,0 +1,33 @@
+[14:13:35.143] [Information] 프로그램 실행
+[14:14:37.295] [Information] Data Logging 시작, 회전 횟수 : 4.5, 회전 속도 : 70
+[14:15:57.596] [Information] Data Logging 시작, 회전 횟수 : 4.5, 회전 속도 : 70
+[14:34:23.059] [Information] Data Logging 시작, 회전 횟수 : 4.5, 회전 속도 : 70
+[14:34:28.073] [Information] Negative Jog
+[14:34:28.077] [Information] Negative Jog
+[14:34:30.270] [Information] Data Logging 시작, 회전 횟수 : 4.5, 회전 속도 : 70
+[14:34:31.923] [Information] Data Logging 시작, 회전 횟수 : 4.5, 회전 속도 : 70
+[14:34:32.429] [Information] Data Logging 시작, 회전 횟수 : 4.5, 회전 속도 : 70
+[14:34:32.683] [Information] Data Logging 시작, 회전 횟수 : 4.5, 회전 속도 : 70
+[14:34:32.868] [Information] Data Logging 시작, 회전 횟수 : 4.5, 회전 속도 : 70
+[14:34:33.084] [Information] Data Logging 시작, 회전 횟수 : 4.5, 회전 속도 : 70
+[14:34:33.285] [Information] Data Logging 시작, 회전 횟수 : 4.5, 회전 속도 : 70
+[14:34:41.259] [Information] 프로그램 종료
+[14:34:45.567] [Information] 프로그램 실행
+[14:34:52.242] [Information] Data Logging 시작, 회전 횟수 : 4.5, 회전 속도 : 70
+[14:47:00.595] [Information] Data Logging 시작, 회전 횟수 : 4.5, 회전 속도 : 70
+[14:47:00.673] [Information] Data Logging 시작, 회전 횟수 : 4.5, 회전 속도 : 70
+[14:47:21.956] [Information] 프로그램 종료
+[14:47:47.084] [Information] 프로그램 실행
+[14:47:54.805] [Information] Data Logging 시작, 회전 횟수 : 4.5, 회전 속도 : 70
+[14:48:17.598] [Information] 프로그램 종료
+[14:57:17.075] [Information] 프로그램 실행
+[14:57:21.706] [Information] Data Logging 시작, 회전 횟수 : 4.5, 회전 속도 : 70
+[14:57:44.925] [Information] 프로그램 종료
+[15:04:57.021] [Information] 프로그램 실행
+[15:05:08.468] [Information] 프로그램 종료
+[15:05:15.326] [Information] 프로그램 실행
+[15:05:19.292] [Information] Data Logging 시작, 회전 횟수 : 4.5, 회전 속도 : 70
+[15:05:42.174] [Information] 프로그램 종료
+[15:12:45.548] [Information] 프로그램 실행
+[15:12:49.499] [Information] Data Logging 시작, 회전 횟수 : 4.5, 회전 속도 : 70
+[15:13:12.503] [Information] 프로그램 종료

@@ -1,0 +1,11 @@
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test_nam\test_nam\bin\Debug\test_nam.exe.config
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test_nam\test_nam\bin\Debug\test_nam.exe
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test_nam\test_nam\bin\Debug\test_nam.pdb
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test_nam\test_nam\obj\Debug\test_nam.csproj.AssemblyReference.cache
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test_nam\test_nam\obj\Debug\test_nam.csproj.SuggestedBindingRedirects.cache
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test_nam\test_nam\obj\Debug\test_nam.Form1.resources
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test_nam\test_nam\obj\Debug\test_nam.Properties.Resources.resources
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test_nam\test_nam\obj\Debug\test_nam.csproj.GenerateResource.cache
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test_nam\test_nam\obj\Debug\test_nam.csproj.CoreCompileInputs.cache
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test_nam\test_nam\obj\Debug\test_nam.exe
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test_nam\test_nam\obj\Debug\test_nam.pdb

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "MWATDNyuwtU/3H8z38bAq3ZQHR4Uy76cuAmda2emNERiU6uNsyGahLbi3txuugKVeAmOerZqaMCtEB8REmJN4Q==",
+  "success": true,
+  "projectFilePath": "D:\\과제\\삭도검사로봇\\삭도 코드\\wire_wheel_code\\삭륜검사로그확인프로그램\\삭륜검사로그확인프로그램\\삭륜검사로그확인프로그램.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\microsoft-windowsapicodepack-core\\1.1.5\\microsoft-windowsapicodepack-core.1.1.5.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft-windowsapicodepack-shell\\1.1.5\\microsoft-windowsapicodepack-shell.1.1.5.nupkg.sha512"
+  ],
+  "logs": []
+}
