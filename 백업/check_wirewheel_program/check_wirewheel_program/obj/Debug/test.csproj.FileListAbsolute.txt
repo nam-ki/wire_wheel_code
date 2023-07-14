@@ -1,0 +1,16 @@
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test\test\obj\Debug\test.csproj.AssemblyReference.cache
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test\test\obj\Debug\test.csproj.SuggestedBindingRedirects.cache
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test\test\obj\Debug\test.Form1.resources
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test\test\obj\Debug\test.Properties.Resources.resources
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test\test\obj\Debug\test.csproj.GenerateResource.cache
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test\test\obj\Debug\test.csproj.CoreCompileInputs.cache
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test\test\bin\Debug\test.exe.config
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test\test\bin\Debug\test.exe
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test\test\bin\Debug\test.pdb
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test\test\bin\Debug\Microsoft.WindowsAPICodePack.dll
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test\test\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test\test\bin\Debug\Microsoft.WindowsAPICodePack.xml
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test\test\bin\Debug\Microsoft.WindowsAPICodePack.Shell.xml
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test\test\obj\Debug\test.csproj.CopyComplete
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test\test\obj\Debug\test.exe
+D:\과제\삭도검사로봇\삭도 코드\wire_wheel_code\test\test\obj\Debug\test.pdb

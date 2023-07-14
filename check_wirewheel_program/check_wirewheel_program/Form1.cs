@@ -19,8 +19,6 @@ namespace check_wirewheel_program
     {
         #region 전역 변수
 
-        //List<string> file_list = new List<string>();
-
         string[] file_list;
         
         CommonOpenFileDialog cofd = new CommonOpenFileDialog();
@@ -28,11 +26,9 @@ namespace check_wirewheel_program
 
         string text_name;
 
-        Dictionary<string, (string, string, string)> log_value_dictionary = new Dictionary<string, (string, string, string)>();
-
-        string trial_data;
-
-        Dictionary<string, List<int>> data_index_dict = new Dictionary<string, List<int>>();
+        //trial nubmer 저장 리스트
+        string[] normal_trial_num_list;
+        string[] damage_trial_num_list;
 
         //x값 배열
         List<double> x_value_list = new List<double>();
@@ -44,21 +40,15 @@ namespace check_wirewheel_program
         List<double> x_value_list2 = new List<double>();
         List<double> z_value_list2 = new List<double>();
 
-        //log datatable
+        //log datatable(마모)
         DataTable log_datatable = new DataTable();
 
-        //log datatable2
+        //log datatable2(정상)
         DataTable log_datatable2 = new DataTable();
 
-        //데이터추출 데이터테이블
-        DataTable normal_dt;
-        DataTable damage_dt;
+        string col_trial_name;
 
-        string check_trial_num;
-
-        DataGridViewRow firstrow;
-
-        List<int> index_value;
+        string check_trial_num = "1"; // 초반 trial num 설정.
 
         //정상 삭륜 파일 경로
         string filepath;
@@ -84,7 +74,6 @@ namespace check_wirewheel_program
         }
         #endregion
 
-
         #region event : form load
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -102,7 +91,6 @@ namespace check_wirewheel_program
         }
 
         #endregion
-
 
         #region event : 폴더 선택 후 파일명 checklist box1에 출력
         //폴더 선택해서 안에 있는 파일명 가져와서 checkedlistbox에 표시
@@ -168,7 +156,7 @@ namespace check_wirewheel_program
             //read_file(text_name);
 
             ////checkbox2에 trial number 불러오기
-            await Task.Run(() => bring_trial_num(datagrid_num:1));
+            damage_trial_num_list= await Task.Run(() => bring_trial_num(log_datatable));
 
             //bring_trial_num();
 
@@ -355,344 +343,110 @@ namespace check_wirewheel_program
         }
         #endregion
 
-        
-
         #region method : 데이터 trial number 가져오기
-        private void bring_trial_num(int datagrid_num)
+        private string[] bring_trial_num(DataTable data_tb)
         {
 
 
-            int datagridview_rowcount;
+            
             int datatable_rowcount;
 
-
-            if (datagrid_num == 1)
-            {
-                datatable_rowcount = log_datatable.Rows.Count;
-                if(log_datatable.Rows.Count == 0)
-                {
-                    return;
-                }
-
-                datagridview_rowcount = dataGridView1.RowCount;
-                if (dataGridView1.RowCount == 0)
-                {
-                    return;
-                }
-            }
-            else
-            {
-                datatable_rowcount = log_datatable2.Rows.Count;
-                if(log_datatable2.Rows.Count == 0)
-                {
-                    return;
-                }
-
-                datagridview_rowcount = dataGridView2.RowCount;
-                if (dataGridView2.RowCount == 0)
-                {
-                    return;
-                }
-            }
-
-            string col_trial_name_test;
-
-            //첫번째 열(trial-number) 불러옴.
-            List<int> index_data = new List<int>();
-
-            if (datagrid_num == 1)
-            {
-                col_trial_name_test = log_datatable.Columns[0].ColumnName;
-
-                DataGridViewColumn col = dataGridView1.Columns[0];//첫번째 열 설정.
-                string col_trial_name = col.Name.ToString();
-                DataTable test_dt = log_datatable.Select($"{col_trial_name_test}= {1.ToString()}").CopyToDataTable();
-            }
-            else
-            {
-                col_trial_name_test = log_datatable2.Columns[0].ColumnName;
-
-                DataGridViewColumn col = dataGridView2.Columns[0];//첫번째 열 설정.
-                string col_trial_name = col.Name.ToString();
-                DataTable test_dt2 = log_datatable2.Select($"{col_trial_name_test}= {1.ToString()}").CopyToDataTable();
-            }
-
             
+            datatable_rowcount = data_tb.Rows.Count;
+            if(datatable_rowcount == 0)
+            {
+                return null;
+            }
             
 
-            //MessageBox.Show("선택된 열의 이름은 " + col_trial_name + " 입니다.");
+            //첫번째 컬럼 이름 불러옴(trial)
+            col_trial_name = data_tb.Columns[0].ColumnName;
 
-            int count = 0;
-            
-            int trial_num_check = 1;
+            //trail number 이름 저장
+            object[] trial_data = data_tb.Select().Select(x => x[col_trial_name]).Distinct().ToArray();
+            string[] trial_num = trial_data.Cast<string>().ToArray();
 
-            index_data.Add(count); // 트라이얼:1 데이터 시작점.
-
-            data_index_dict.Clear();
-
-            int last_trial_num;
-            int start_trial_num=0;
-            bool check_start = true;
-
-            for (int i = 0; i < datagridview_rowcount - 1; i++) // 맨 위의 행 이름들도 포함하므로 -1을 해줘야함.
-            {
-                if (datagrid_num == 1)
-                {
-                    DataGridViewRow row = dataGridView1.Rows[i];
-                    trial_data = row.Cells[0].Value.ToString();
-                }
-                else
-                {
-                    DataGridViewRow row = dataGridView2.Rows[i];
-                    trial_data = row.Cells[0].Value.ToString();
-                }
-                
-
-                
-
-                if(check_start == true)
-                {
-                    start_trial_num = int.Parse(trial_data);
-                    check_start = false;
-                }
-
-                //WriteTextBox(textBox1, trial_data+"\t"+count+"\r\n");
-
-                //count를 체크하면서 진행하다가 trial number가 바뀌면 전 인덱스부분을 전 트라이얼 넘버 마지막 index로 설정.  현 인덱스를 트라이얼 넘버 시작 index로 설정.
-                if (trial_num_check != int.Parse(trial_data))
-                {
-                    int last_trial_index = i - 1; // 현재 카운트(인덱스)-1을 트라이얼 마지막 index로 설정.
-
-                    index_data.Add(last_trial_index);
-
-                    //WriteTextBox(textBox1, $"index_data=({index_data[0]},{index_data[1]})");
-                    //WriteTextBox(textBox1, "\r\n");
-
-                    data_index_dict.Add(Convert.ToString(trial_num_check), index_data);
-
-                    //index_data 리스트 초기화 후 현재 시점부터 카운트부터 다음 트라이얼 시작으로 설정.
-                    index_data = new List<int>();
-
-
-
-                    int start_trial_index = i;
-                    index_data.Add(start_trial_index); // 현재 카운트(인덱스)를 트라이얼 마지막 index로 설정.
-
-                    trial_num_check++; // 다음 트라이얼 넘버를 비교하기 위해 증가
-                }
-
-                //마지막 행에 도달했을 때 코드
-                else if (count == datagridview_rowcount - 2)
-                {
-                    int last_trial_index = i; // 현재 카운트(인덱스)을 트라이얼 마지막 index로 설정.
-
-                    index_data.Add(last_trial_index);
-
-                    //WriteTextBox(textBox1, $"index_data=({index_data[0]},{index_data[1]})");
-                    //WriteTextBox(textBox1, "\r\n");
-
-                    data_index_dict.Add(Convert.ToString(trial_num_check), index_data);
-
-                    last_trial_num = trial_num_check;
-                }
-
-                count++;
-
-
-            }
-
-            StringBuilder sb = new StringBuilder();
-            foreach (var pair in data_index_dict)
-            {
-                sb.AppendLine($"Key: {pair.Key}, value: {pair.Value}\r\n");
-            }
-
-            //WriteTextBox(textBox1, sb.ToString());
-
-            if (vScrollBar1.InvokeRequired)
-            {
-                vScrollBar1.Invoke(new MethodInvoker(delegate {
-                    textBox1.Text = start_trial_num.ToString();
-                    vScrollBar1.Minimum = start_trial_num;
-                    vScrollBar1.Maximum = trial_num_check+9;
-                }));
-            }
-            else
-            {
-                textBox1.Text = start_trial_num.ToString();
-                vScrollBar1.Minimum = start_trial_num;
-                vScrollBar1.Maximum = trial_num_check+9;
-            }
-
-            check_trial_num = Convert.ToString(start_trial_num);
-
+            //각 trial number 첫번째 인덱스 반환
             
 
 
-            ////key값을 checkedlistbox2에 저장하여 표시
 
-            //if (checkedListBox2.InvokeRequired)
-            //{
-            //    checkedListBox2.Invoke(new MethodInvoker(delegate { checkedListBox2.Items.Clear(); }));
-            //}
-            //else
-            //{
-            //    checkedListBox2.Items.Clear();
-            //}
+            return trial_num;
+            
 
-
-
-            //foreach (var pair in data_index_dict)
-            //{
-            //    if (checkedListBox2.InvokeRequired)
-            //    {
-            //        checkedListBox2.Invoke(new MethodInvoker(delegate { checkedListBox2.Items.Add(pair.Key.ToString()); }));
-            //    }
-            //    else
-            //    {
-            //        checkedListBox2.Items.Add(pair.Key.ToString());
-            //    }
-
-            //    //checkedListBox2.Items.Add(pair.Key.ToString());
-            //}
         }
 
         #endregion
 
-
-        #region event : checkboxlist2에서 원하는 trial number 번호 선택.(데이터 번호 선택) - 사용안함
-        //private void checkedListBox2_MouseDoubleClick(object sender, MouseEventArgs e)
-        //{
-        //    if (checkedListBox2.SelectedItem != null)
-        //    {
-        //        int index = checkedListBox2.IndexFromPoint(e.Location);
-
-        //        check_trial_num = checkedListBox2.Items[index].ToString();
-
-        //        //선택한 항목만 체크표시하고 나머지는 해제
-        //        for (int i = 0; i < checkedListBox2.Items.Count; i++)
-        //        {
-        //            if (i == index)
-        //            {
-        //                checkedListBox2.SetItemCheckState(i, CheckState.Checked);
-        //            }
-        //            else
-        //            {
-        //                checkedListBox2.SetItemCheckState(i, CheckState.Unchecked);
-        //            }
-        //        }
-        //        //MessageBox.Show(check_trial_num + " select");
-
-        //        //trial num 첫번째 인덱스로 datagridview 위치이동
-        //        int trial_num_index;
-
-        //        trial_num_index = data_index_dict[check_trial_num][0];
-
-        //        dataGridView1.FirstDisplayedScrollingRowIndex = trial_num_index;
-        //        dataGridView1.Refresh();
-
-        //        //data_exist(check_trial_num);
-
-        //        timer1.Enabled = true;
-        //    }
-
-
-        //}
-
-        #endregion
-
-
         #region method : 선택한 번호에 맞는 데이터 출력
+        //2:정상 1:마모
         //checkboxlist에서 선택한 trial nuimber 번호에 맞는 데이터 선택해서 출력
-        private void data_exist(string trial_num)
+        private async void data_exist(string trial_num)
         {
-            
-            index_value = new List<int>();
 
-            if (data_index_dict.ContainsKey(trial_num))
+            //x축 데이터, z축 데이터 list 제작.
+            if (normal_trial_num_list.Contains(trial_num) || damage_trial_num_list.Contains(trial_num))
             {
-                index_value = data_index_dict[trial_num];
 
-                int start_index = index_value[0];
+                DataRow[] dataRows = log_datatable.Select($"{col_trial_name} = '{trial_num}'");
+                if (dataRows == null || dataRows.Length == 0)
+                {
+                    return;
+                }
 
-                int end_index = index_value[1];
+                DataTable data1 = dataRows.CopyToDataTable();
 
-                x_value_list.Clear();
-                z_value_list.Clear();
+                DataRow[] dataRows2 = log_datatable2.Select($"{col_trial_name} = '{trial_num}'");
+                if (dataRows2 == null || dataRows2.Length == 0)
+                {
+                    return;
+                }
+                DataTable data2 = dataRows2.CopyToDataTable();
 
-                x_value_list2.Clear();
-                z_value_list2.Clear();
+                //DataTable data1 = log_datatable.Select($"{col_trial_name} = {trial_num}").CopyToDataTable();
+
+                //DataTable data2 = log_datatable2.Select($"{col_trial_name} = {trial_num}").CopyToDataTable();
+
+
+                x_value_list = data1.Select().Select(x => Convert.ToDouble(x["X"])).ToList();
+                z_value_list = data1.Select().Select(x => Convert.ToDouble(x["Z"])).ToList();
+
+                x_value_list2 = data2.Select().Select(x => Convert.ToDouble(x["X"])).ToList();
+                z_value_list2 = data2.Select().Select(x => Convert.ToDouble(x["Z"])).ToList();
+
+                //그래프 출력
+                await Task.Run(() => show_chart());
 
                 
 
-                for (int i = start_index; i <= end_index; i++)
+            }
+
+            else if (!(normal_trial_num_list.Contains(trial_num) || damage_trial_num_list.Contains(trial_num)))
                 {
-                    firstrow = dataGridView1.Rows[i];
+                    timer1.Enabled = false;
 
-                    string trial_number = firstrow.Cells[0].Value.ToString();
-                    string point_number = firstrow.Cells[3].Value.ToString();
-                    string x_value = firstrow.Cells[4].Value.ToString();
-                    string z_value = firstrow.Cells[5].Value.ToString();
-
-                    ////trial number 추출값 확인용
-                    //WriteTextBox(textBox1, "던질거");
-                    //WriteTextBox(textBox1, $"{trial_number} {point_number} {x_value} {z_value}" + " ");
-                    //WriteTextBox(textBox1, "\r\n");
-
-                    //WriteTextBox(textBox1, "원본");
-                    //foreach (DataGridViewCell cell in firstrow.Cells)
-                    //{
-                    //    if (cell.Value != null)
-                    //    {
-                    //        WriteTextBox(textBox1, cell.Value.ToString() + " ");
-                    //    }
-                    //}
-
-                    //WriteTextBox(textBox1, "\r\n");
-
-                    x_value_list.Add(double.Parse(x_value));
-                    z_value_list.Add(double.Parse(z_value));
-
-                }
-
-                if (dataGridView2.RowCount != 0) {
-                    for (int i = start_index; i <= end_index; i++)
-                    {
-                        firstrow = dataGridView2.Rows[i];
-
-                        string trial_number = firstrow.Cells[0].Value.ToString();
-                        string point_number = firstrow.Cells[3].Value.ToString();
-                        string x_value = firstrow.Cells[4].Value.ToString();
-                        string z_value = firstrow.Cells[5].Value.ToString();
-
-                        ////trial number 추출값 확인용
-                        //WriteTextBox(textBox1, "던질거");
-                        //WriteTextBox(textBox1, $"{trial_number} {point_number} {x_value} {z_value}" + " ");
-                        //WriteTextBox(textBox1, "\r\n");
-
-                        //WriteTextBox(textBox1, "원본");
-                        //foreach (DataGridViewCell cell in firstrow.Cells)
-                        //{
-                        //    if (cell.Value != null)
-                        //    {
-                        //        WriteTextBox(textBox1, cell.Value.ToString() + " ");
-                        //    }
-                        //}
-
-                        //WriteTextBox(textBox1, "\r\n");
-
-                        x_value_list2.Add(double.Parse(x_value));
-                        z_value_list2.Add(double.Parse(z_value));
-
-                    }
+                    MessageBox.Show(trial_num + "가 index dictionary에 존재하지 않습니다.");
+                    return;
                 }
 
 
+
+
+            }
+
+        #endregion
+
+        #region method: chart 출력
+
+        private void show_chart()
+        {
+                //x,z 데이터 list를 chart에 출력
                 if (chart1.InvokeRequired)
                 {
-                    chart1.Invoke(new MethodInvoker(delegate { // Chart에 데이터 추가 및 표시
+                    chart1.Invoke(new MethodInvoker(delegate
+                    { // Chart에 데이터 추가 및 표시
 
-                        
+
 
                         chart1.Series.Clear(); // 기존 시리즈 초기화
 
@@ -711,19 +465,6 @@ namespace check_wirewheel_program
                         chart1.ChartAreas[0].AxisX.Interval = 1;
                         chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
                         chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-
-                        //차트 배경 이미지 설정
-                        //chart1.ChartAreas[0].BackImage = "D:\\과제\\삭도검사로봇\\삭도 코드\\wire_wheel_code\\check_wirewheel_program\\check_wirewheel_program\\bin\\Debug\\modeling_image.png";
-
-                        //chart1.ChartAreas[0].BackImageWrapMode = ChartImageWrapMode.Scaled;
-                        //chart1.ChartAreas[0].BackImage = "D:\\과제\\삭도검사로봇\\삭도 코드\\wire_wheel_code\\check_wirewheel_program\\check_wirewheel_program\\bin\\Debug\\modeling_image.png";
-
-
-                        
-
-                        
-
-
 
                         chart1.ChartAreas[0].AxisY.Minimum = Global.RobotParam.Mobile_System.ChartYMin; // 335
                         chart1.ChartAreas[0].AxisY.Maximum = Global.RobotParam.Mobile_System.ChartYMax;//345;
@@ -748,7 +489,7 @@ namespace check_wirewheel_program
                         series2.YAxisType = AxisType.Secondary;
                         series2.XAxisType = AxisType.Secondary;
 
-                        
+
 
                         chart1.ChartAreas[0].AxisY2.Minimum = Global.RobotParam.Mobile_System.ChartYMin2; // 335
                         chart1.ChartAreas[0].AxisY2.Maximum = Global.RobotParam.Mobile_System.ChartYMax2;//345;
@@ -761,89 +502,34 @@ namespace check_wirewheel_program
                         chart1.Series[1].ChartType = SeriesChartType.Line;
                         chart1.Series[1].LegendText = "legned2:original_wheel";
 
-
-
-
-                        //차트 그래프 설정(series1)
-
-
-
-
-                        //series.ChartType = SeriesChartType.Line; // 시리즈의 차트 유형 설정
-                        //series.MarkerSize = 2;
-                        //series.Color = Color.Red;
-
-                        //chart1.ChartAreas[0].AxisX.Interval = 1;
-                        //chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-                        //chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-
-                        ////차트 배경 이미지 설정
-                        ////chart1.ChartAreas[0].BackImage = "D:\\과제\\삭도검사로봇\\삭도 코드\\wire_wheel_code\\check_wirewheel_program\\check_wirewheel_program\\bin\\Debug\\modeling_image.png";
-
-
-
-                        //chart1.ChartAreas[0].AxisY.Minimum = Global.RobotParam.Mobile_System.ChartYMin; // 335
-                        //chart1.ChartAreas[0].AxisY.Maximum = Global.RobotParam.Mobile_System.ChartYMax;//345;
-
-                        //chart1.ChartAreas[0].AxisX.Minimum = Global.RobotParam.Mobile_System.ChartXMin;//-36;
-                        //chart1.ChartAreas[0].AxisX.Maximum = Global.RobotParam.Mobile_System.ChartXMax;//36;
-
-                        //chart1.Series[0].IsVisibleInLegend = false;
-                        //chart1.Series[0].IsValueShownAsLabel = false;
-                        //chart1.Series[0].ChartType = SeriesChartType.Line;
-                        //chart1.Series[0].LegendText = "damaged wheel";
-
-                        //차트 그래프 설정(series2)
-
-
-
-                        //series2.ChartType = SeriesChartType.Line; // 시리즈의 차트 유형 설정
-                        //series2.MarkerSize = 2;
-                        //series2.Color = Color.Blue;
-
-                        //chart1.ChartAreas[0].AxisX.Interval = 1;
-                        //chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-                        //chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-
-
-                        //chart1.ChartAreas[1].AxisY.Minimum = Global.RobotParam.Mobile_System.ChartYMin; // 335
-                        //chart1.ChartAreas[1].AxisY.Maximum = Global.RobotParam.Mobile_System.ChartYMax;//345;
-
-                        //chart1.ChartAreas[1].AxisX.Minimum = Global.RobotParam.Mobile_System.ChartXMin;//-36;
-                        //chart1.ChartAreas[1].AxisX.Maximum = Global.RobotParam.Mobile_System.ChartXMax;//36;
-
-                        //chart1.Series[1].IsVisibleInLegend = false;
-                        //chart1.Series[1].IsValueShownAsLabel = false;
-                        //chart1.Series[1].ChartType = SeriesChartType.Line;
-                        //chart1.Series[1].LegendText = "original wheel";
-
-
-
                         try
                         {
 
-                            //chart1.Series[0].Points.DataBindXY(x_value_list, z_value_list);
-                            //chart1.Series[1].Points.DataBindXY(x_value_list2, z_value_list2);
+
                             series.Points.DataBindXY(x_value_list, z_value_list);// 데이터 포인트 추가
                             series2.Points.DataBindXY(x_value_list2, z_value_list2);
                         }
                         catch (Exception ex)
                         {
+
                             return;
                         }
-                    })); 
+                    }));
 
                 }
 
                 else
                 {
-                    // Chart에 데이터 추가 및 표시
                     chart1.Series.Clear(); // 기존 시리즈 초기화
-                    Series series = chart1.Series.Add("Data"); // 새로운 시리즈 생성
-                                                               //Series series = new Series("Data"); // 새로운 시리즈 생성
 
-                    Series series2 = chart1.Series.Add("Data2");
 
+                    Series series = chart1.Series.Add("damaged wheel"); // 새로운 시리즈 생성
+                                                                        //Series series = new Series("Data"); // 새로운 시리즈 생성
+
+                    Series series2 = chart1.Series.Add("original wheel");
+
+
+                    //테스트
                     series.ChartType = SeriesChartType.Line; // 시리즈의 차트 유형 설정
                     series.MarkerSize = 2;
                     series.Color = Color.Red;
@@ -852,39 +538,46 @@ namespace check_wirewheel_program
                     chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
                     chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
 
-
                     chart1.ChartAreas[0].AxisY.Minimum = Global.RobotParam.Mobile_System.ChartYMin; // 335
                     chart1.ChartAreas[0].AxisY.Maximum = Global.RobotParam.Mobile_System.ChartYMax;//345;
 
                     chart1.ChartAreas[0].AxisX.Minimum = Global.RobotParam.Mobile_System.ChartXMin;//-36;
                     chart1.ChartAreas[0].AxisX.Maximum = Global.RobotParam.Mobile_System.ChartXMax;//36;
 
-                    chart1.Series[0].IsVisibleInLegend = false;
+                    chart1.Series[0].IsVisibleInLegend = true;
                     chart1.Series[0].IsValueShownAsLabel = false;
                     chart1.Series[0].ChartType = SeriesChartType.Line;
+                    chart1.Series[0].LegendText = "legend1:damaged wheel";
 
-                    //차트 그래프 설정(series2)
                     series2.ChartType = SeriesChartType.Line; // 시리즈의 차트 유형 설정
                     series2.MarkerSize = 2;
                     series2.Color = Color.Blue;
 
-                    chart1.ChartAreas[0].AxisX.Interval = 1;
-                    chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-                    chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+
+                    chart1.ChartAreas[0].AxisX2.Interval = 1;
+                    chart1.ChartAreas[0].AxisX2.MajorGrid.Enabled = false;
+                    chart1.ChartAreas[0].AxisY2.MajorGrid.Enabled = false;
+
+                    series2.YAxisType = AxisType.Secondary;
+                    series2.XAxisType = AxisType.Secondary;
 
 
-                    chart1.ChartAreas[0].AxisY.Minimum = Global.RobotParam.Mobile_System.ChartYMin; // 335
-                    chart1.ChartAreas[0].AxisY.Maximum = Global.RobotParam.Mobile_System.ChartYMax;//345;
 
-                    chart1.ChartAreas[0].AxisX.Minimum = Global.RobotParam.Mobile_System.ChartXMin;//-36;
-                    chart1.ChartAreas[0].AxisX.Maximum = Global.RobotParam.Mobile_System.ChartXMax;//36;
+                    chart1.ChartAreas[0].AxisY2.Minimum = Global.RobotParam.Mobile_System.ChartYMin2; // 335
+                    chart1.ChartAreas[0].AxisY2.Maximum = Global.RobotParam.Mobile_System.ChartYMax2;//345;
 
-                    chart1.Series[0].IsVisibleInLegend = false;
-                    chart1.Series[0].IsValueShownAsLabel = false;
-                    chart1.Series[0].ChartType = SeriesChartType.Line;
+                    chart1.ChartAreas[0].AxisX2.Minimum = Global.RobotParam.Mobile_System.ChartXMin2;//-36;
+                    chart1.ChartAreas[0].AxisX2.Maximum = Global.RobotParam.Mobile_System.ChartXMax2;//36;
+
+                    chart1.Series[1].IsVisibleInLegend = true;
+                    chart1.Series[1].IsValueShownAsLabel = false;
+                    chart1.Series[1].ChartType = SeriesChartType.Line;
+                    chart1.Series[1].LegendText = "legned2:original_wheel";
 
                     try
                     {
+
+
                         series.Points.DataBindXY(x_value_list, z_value_list);// 데이터 포인트 추가
                         series2.Points.DataBindXY(x_value_list2, z_value_list2);
                     }
@@ -893,57 +586,18 @@ namespace check_wirewheel_program
                         return;
                     }
 
-                    //series.Points.DataBindXY(x_value_list, z_value_list); // 데이터 포인트 추가
+
                 }
 
-
-                //// Chart에 데이터 추가 및 표시
-                //chart1.Series.Clear(); // 기존 시리즈 초기화
-                //Series series = chart1.Series.Add("Data"); // 새로운 시리즈 생성
-                ////Series series = new Series("Data"); // 새로운 시리즈 생성
-                //series.ChartType = SeriesChartType.Line; // 시리즈의 차트 유형 설정
-                //series.MarkerSize = 2;
-                //series.Color = Color.Red;
-
-                //chart1.ChartAreas[0].AxisX.Interval = 1;
-                //chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-                //chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-
-
-                //chart1.ChartAreas[0].AxisY.Minimum = Global.RobotParam.Mobile_System.ChartYMin; // 335
-                //chart1.ChartAreas[0].AxisY.Maximum = Global.RobotParam.Mobile_System.ChartYMax;//345;
-
-                //chart1.ChartAreas[0].AxisX.Minimum = Global.RobotParam.Mobile_System.ChartXMin;//-36;
-                //chart1.ChartAreas[0].AxisX.Maximum = Global.RobotParam.Mobile_System.ChartXMax;//36;
-
-                //chart1.Series[0].IsVisibleInLegend = false;
-                //chart1.Series[0].IsValueShownAsLabel = false;
-                //chart1.Series[0].ChartType = SeriesChartType.Line;
-
-
-                //series.Points.DataBindXY(x_value_list, z_value_list); // 데이터 포인트 추가
-
-
-                //chart1.Series.Add(series); // 시리즈를 Chart에 추가
-
             }
 
-            else if (!data_index_dict.ContainsKey(trial_num))
-            {
-                timer1.Enabled = false;
-                
-                MessageBox.Show(trial_num + "가 index dictionary에 존재하지 않습니다.");
-                return;
-            }
             
-        }
-
-        #endregion
-
+        
+    #endregion
 
         #region event : 설정
-        //설정으로 chart axis 설정
-        private void 설정ToolStripMenuItem_Click(object sender, EventArgs e)
+    //설정으로 chart axis 설정
+    private void 설정ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             setting setting = new setting();
             setting.ShowDialog();
@@ -955,6 +609,7 @@ namespace check_wirewheel_program
         {
             
             await Task.Run(() =>  data_exist(check_trial_num));
+            
             
         }
         #endregion
@@ -969,7 +624,7 @@ namespace check_wirewheel_program
             //trial num 첫번째 인덱스로 datagridview 위치이동
             int trial_num_index;
 
-            trial_num_index = data_index_dict[check_trial_num][0];
+            trial_num_index = log_datatable2.Rows.Count / normal_trial_num_list.Length * (Convert.ToInt32(check_trial_num)-1);
 
             dataGridView1.FirstDisplayedScrollingRowIndex = trial_num_index;
             dataGridView2.FirstDisplayedScrollingRowIndex = trial_num_index;
@@ -977,8 +632,6 @@ namespace check_wirewheel_program
             dataGridView2.Refresh();
 
             timer1.Enabled = true;
-            
-
 
         }
 
@@ -992,41 +645,31 @@ namespace check_wirewheel_program
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                //string fileName = Path.GetFileName(openFileDialog1.FileName);
+                
                 filepath = openFileDialog1.FileName;
-                //image_path = filePath + "\\" + fileName;
+                
                 MessageBox.Show(filepath);
             }
 
             //파일 읽어오기
             await Task.Run(() => read_file(filepath,datagrid_num:2));
-            //read_file(text_name);
+            
 
-            //checkbox2에 trial number 불러오기
-            await Task.Run(() => bring_trial_num(datagrid_num: 2));
+            
+            normal_trial_num_list = await Task.Run(() => bring_trial_num(log_datatable2));
 
         }
 
         #endregion
 
-
         #region event : chartview button click
-        //graphview
+        //작은 데이터의 갯수에 데이터를 강제로 맞춰주고 chart 출력
         private void button3_Click(object sender, EventArgs e)
         {
 
             if(dataGridView1.RowCount > dataGridView2.RowCount)
             {
-                //int lower_count = dataGridView2.RowCount;
-                //int upper_count = dataGridView1.RowCount;
-
-                //for(int i=lower_count+1; i < upper_count; i++)
-                //{
-                //    dataGridView1.Rows.RemoveAt(i);
-                //}
-
-
-                //vScrollBar1.Maximum = (int)dataGridView1.Rows[lower_count].Cells[0].Value;
+                
 
                 int lower_count = log_datatable2.Rows.Count;
                 int upper_count = log_datatable.Rows.Count;
@@ -1041,21 +684,12 @@ namespace check_wirewheel_program
 
                 vScrollBar1.Maximum = Convert.ToInt32(dataGridView2.Rows[lower_count-1].Cells[0].Value)+9;
 
-                //bring_trial_num(1);
+                
 
             }
             else if (dataGridView1.RowCount < dataGridView2.RowCount)
             {
-                //int lower_count = dataGridView1.RowCount;
-                //int upper_count = dataGridView2.RowCount;
-
-                //for (int i = lower_count + 1; i < upper_count; i++)
-                //{
-                //    int last_index = dataGridView2.RowCount-1;
-                //    dataGridView2.Rows.RemoveAt(last_index);
-                //}
-
-                //vScrollBar1.Maximum = (int)dataGridView1.Rows[lower_count].Cells[0].Value;
+               
 
                 int lower_count = log_datatable.Rows.Count;
                 int upper_count = log_datatable2.Rows.Count;
@@ -1066,17 +700,13 @@ namespace check_wirewheel_program
                     log_datatable2.Rows.RemoveAt(last_index);
                 }
 
-                //datagird2 초기화
-
-                //dataGridView2.Columns.Clear();
-
-                //datagrid2 재작성
+                
 
                 dataGridView2.DataSource = log_datatable2;
 
                 vScrollBar1.Maximum = Convert.ToInt32(dataGridView1.Rows[lower_count-1].Cells[0].Value)+9;
 
-                //bring_trial_num(2);
+                
 
             }
 
